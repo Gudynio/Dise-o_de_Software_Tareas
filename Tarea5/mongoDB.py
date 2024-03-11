@@ -26,12 +26,13 @@ class MongoDB(DataBase):
         db = client[database_name]
         return db[collection_name]
         
-    def insertar(self, data: str, date: str) -> bool:
+    def insertar(self,id,  data: str, date: str) -> bool:
         collection = self.conection()
         # Data to be inserted
         data_to_insert = {
-            "data": "test",
-            "date": "2024-03-12"
+            "id" : id,
+            "data": data,
+            "date": date
         }
 
         # Insert one document
@@ -41,11 +42,25 @@ class MongoDB(DataBase):
         print("Document inserted with ID:", result.inserted_id)
 
     
-    def actualizar(self, data: str) -> bool:
-        return super().actualizar(data)
+    def actualizar(self, data: str, date: str) -> bool:
+        collection = self.conection()
+        self.data = data
+        data_to_update = {
+            "date": date,
+        }
+
+        # Corrección en la llamada a update_one
+        result = collection.update_one({"data": data}, {"$set": {"date": date}})
+
+        print("Document updated with ID")
+
+ 
     
-    def eliminar(self, data: str) -> bool:   
-        return super().eliminar(data)
+    def eliminar(self, data: str) -> bool:
+        collection = self.conection()
+        result = collection.delete_one({"id":1})
+        print("The file was deleted")
 
 mongotest = MongoDB(uri1,database_name1,collection_name1)
-mongotest.insertar("Test2","2024-03-14")
+#mongotest.insertar(1,"Test2","2024-03-15")
+mongotest.eliminar(1)
