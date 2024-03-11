@@ -61,7 +61,7 @@ class MySQL(DataBase):
         else:
             return("Error connecting to the database.")
 
-    def imprimir_registros(self, Nombre):
+    def abrir(self, fecha):
         connection = self.conectar()
 
         if connection:
@@ -70,7 +70,7 @@ class MySQL(DataBase):
                 cursor = connection.cursor()
 
                 # Ejemplo: Realizar una consulta SELECT
-                select_query = f"SELECT * FROM {Nombre}"
+                select_query = f"SELECT * FROM Reporte where  fecha=DATE('{fecha}')"
                 cursor.execute(select_query)
 
                 # Obtener todos los resultados de la consulta
