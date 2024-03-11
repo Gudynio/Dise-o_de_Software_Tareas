@@ -61,6 +61,11 @@ class MongoDB(DataBase):
         result = collection.delete_one({"id":1})
         print("The file was deleted")
 
+    def abrir(self, id: int):
+        collection = self.conection()
+        results = collection.find_one({"id":id})
+        print (results)
+
 mongotest = MongoDB(uri1,database_name1,collection_name1)
 #mongotest.insertar(1,"Test2","2024-03-15")
 mongotest.eliminar(1)
